@@ -1,9 +1,12 @@
 import http from 'http';
 import { routes } from './routes.js';
+import { buffer } from './middleware/buffer.js';
 
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const { url, method } = req;
+
+  await buffer(req, res)
 
   const route = routes.find((route) => {
     return route.method === method && route.path === url;
