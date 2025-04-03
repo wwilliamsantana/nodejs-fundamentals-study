@@ -1,4 +1,5 @@
 import fs from "fs/promises"
+import { title } from "process"
 
 
 export class Database {
@@ -47,9 +48,30 @@ export class Database {
       throw new Error("Task not found")
     }
 
-    task.completed_at = new Date()
+    task.completed_at = task.completed_at ? null : new Date()
+
+
     this.#persist()
   }
+
+  update(table, id, data) {
+    const task = this.#database[table].find(task => task.id === id)
+
+    if (!task) {
+      throw new Error("Task not found")
+    }
+
+    const taskUpdate = {
+      ...data,
+      title: data.title ?? task.title,
+      description: data.description ?? task.description,
+      update_at: new Date()
+    }
+
+    Object.assign(task, taskUpdate)
+    this.#persist()
+  }
+
 
 
 }

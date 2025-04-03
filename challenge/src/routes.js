@@ -41,6 +41,12 @@ export const routes = [
     handler: (req, res) => {
       const { id } = req.params
 
+      try {
+        database.delete("tasks", id)
+        return res.writeHead(204).end()
+      } catch (error) {
+        return res.writeHead(404).end(JSON.stringify({ error: error.message }))
+      }
 
 
     }
@@ -60,5 +66,23 @@ export const routes = [
 
     }
   },
+  {
+    method: "PUT",
+    path: routePath("/tasks/:id"),
+    handler: (req, res) => {
+      const { id } = req.params
+      const { title, description } = req.body
 
+
+      try {
+        database.update("tasks", id, {
+          title,
+          description,
+        })
+        return res.writeHead(201).end()
+      } catch (error) {
+        return res.writeHead(404).end(JSON.stringify({ error: error.message }))
+      }
+    }
+  }
 ]
