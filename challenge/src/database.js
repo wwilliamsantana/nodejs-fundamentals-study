@@ -33,10 +33,23 @@ export class Database {
 
   delete(table, id) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
-    if (rowIndex > -1) {
-      this.#database[table].splice(rowIndex, 1)
-      this.#persist()
+    if (rowIndex === -1) {
+      throw new Error("Row not found")
+    }
+    this.#database[table].splice(rowIndex, 1)
+    this.#persist()
+  }
+
+  completeTask(table, id) {
+    const task = this.#database[table].find(task => task.id === id)
+
+    if (!task) {
+      throw new Error("Task not found")
     }
 
+    task.completed_at = new Date()
+    this.#persist()
   }
+
+
 }

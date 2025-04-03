@@ -40,8 +40,25 @@ export const routes = [
     path: routePath("/tasks/:id"),
     handler: (req, res) => {
       const { id } = req.params
-      database.delete("tasks", id)
-      return res.writeHead(204).end()
+
+
+
     }
-  }
+  },
+  {
+    method: "PATCH",
+    path: routePath("/tasks/:id/complete"),
+    handler: (req, res) => {
+      const { id } = req.params
+
+      try {
+        database.completeTask("tasks", id)
+        return res.writeHead(204).end()
+      } catch (error) {
+        return res.writeHead(404).end(JSON.stringify({ error: error.message }))
+      }
+
+    }
+  },
+
 ]
