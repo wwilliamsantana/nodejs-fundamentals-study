@@ -18,8 +18,18 @@ export class Database {
     fs.writeFile("db.json", JSON.stringify(this.#database))
   }
 
-  select(table) {
-    return this.#database[table]
+  select(table, search) {
+    let tasks = this.#database[table] ?? []
+
+    if (search) {
+      tasks = tasks.filter(task => {
+        return Object.entries(search).some(([key, value]) => {
+          return task[key].toLowerCase().includes(value.toLowerCase())
+        })
+      })
+    }
+
+    return tasks
   }
 
   insert(table, data) {
