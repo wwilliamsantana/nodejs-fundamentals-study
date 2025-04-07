@@ -23,3 +23,24 @@
 **Utilizei o Insomnia para fazer requisição para a API
 
 ### ROTAS
+
+#### GET - /tasks
+> Return TASKS
+> Possibilidade de envio de query para pesquisas entre os tasks
+
+#### POST - /tasks
+> RETURN - HTTP Status 201
+
+#### PATCH - /tasks/:id/complete
+> RETURN Deu tudo certo - HTTP Status 204 <br>
+> RETURN Error - HTTP Status 404
+
+#### PUT - /tasks/:id
+ 
+> RETURN Deu tudo certo - HTTP Status 204<br>
+> RETURN Error - HTTP Status 404
+
+#### DELETE - /tasks/:id
+> RETURN Deu tudo certo - HTTP Status 204<br>
+> RETURN Error - HTTP Status 404
+
